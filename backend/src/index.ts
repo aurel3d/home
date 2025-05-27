@@ -14,13 +14,20 @@ const server = createServer(app);
 const io = new Server(server, {
   cors: {
     origin: ["http://localhost:5173", "http://localhost:5174"],
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+    credentials: true
   }
 });
 
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173", "http://localhost:5174"],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
 app.use(express.json());
 
 const deviceService = new DeviceService();

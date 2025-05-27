@@ -8,7 +8,10 @@ export const useDeviceStore = defineStore('device', () => {
   const devices = ref<Device[]>([])
   const rooms = ref<string[]>([])
   const loading = ref(false)
-  const socket = io('http://localhost:3001')
+  const socket = io({
+    autoConnect: true,
+    transports: ['websocket', 'polling']
+  })
 
   const devicesByRoom = computed(() => {
     const grouped: Record<string, Device[]> = {}
