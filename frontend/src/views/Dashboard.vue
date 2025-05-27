@@ -75,13 +75,13 @@
       <v-col cols="12">
         <v-card>
           <v-card-title>
-            <v-icon class="mr-2">mdi-history</v-icon>
-            RECENT NEURAL ACTIVITY
+            <v-icon class="mr-2">mdi-grid</v-icon>
+            NEURAL NETWORK NODES
           </v-card-title>
           <v-card-text>
             <v-row>
               <v-col
-                v-for="device in recentDevices"
+                v-for="device in displayDevices"
                 :key="device.id"
                 cols="12"
                 md="6"
@@ -104,10 +104,10 @@ import DeviceCard from '@/components/DeviceCard.vue'
 
 const deviceStore = useDeviceStore()
 
-const recentDevices = computed(() =>
+const displayDevices = computed(() =>
   deviceStore.devices
     .slice()
-    .sort((a, b) => new Date(b.lastSeen).getTime() - new Date(a.lastSeen).getTime())
+    .sort((a, b) => a.name.localeCompare(b.name))
     .slice(0, 6)
 )
 
