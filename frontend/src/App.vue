@@ -1,11 +1,11 @@
 <template>
   <v-app>
-    <v-app-bar :elevation="2" color="primary">
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-app-bar-title>Home Automation</v-app-bar-title>
+    <v-app-bar :elevation="0" class="cyberpunk-bar">
+      <v-app-bar-nav-icon @click="drawer = !drawer" color="primary"></v-app-bar-nav-icon>
+      <v-app-bar-title class="cyberpunk-title">⚡ NEURAL HOME CONTROL ⚡</v-app-bar-title>
       <v-spacer></v-spacer>
-      <v-btn icon @click="toggleTheme">
-        <v-icon>{{ isDark ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
+      <v-btn icon @click="toggleTheme" color="secondary">
+        <v-icon>{{ isCyberpunk ? 'mdi-lightbulb-outline' : 'mdi-creation' }}</v-icon>
       </v-btn>
     </v-app-bar>
 
@@ -36,16 +36,16 @@ import { useTheme } from 'vuetify'
 const theme = useTheme()
 const drawer = ref(false)
 
-const isDark = computed(() => theme.global.name.value === 'dark')
+const isCyberpunk = computed(() => theme.global.name.value === 'cyberpunk')
 
 const navigationItems = [
-  { title: 'Dashboard', icon: 'mdi-view-dashboard', to: '/' },
-  { title: 'Devices', icon: 'mdi-lightbulb', to: '/devices' },
-  { title: 'Rooms', icon: 'mdi-home', to: '/rooms' },
-  { title: 'Settings', icon: 'mdi-cog', to: '/settings' },
+  { title: 'NEURAL CORE', icon: 'mdi-brain', to: '/' },
+  { title: 'TECH MATRIX', icon: 'mdi-wifi', to: '/devices' },
+  { title: 'SECTORS', icon: 'mdi-lan', to: '/rooms' },
+  { title: 'SYS CONFIG', icon: 'mdi-cog-outline', to: '/settings' },
 ]
 
 const toggleTheme = () => {
-  theme.global.name.value = isDark.value ? 'light' : 'dark'
+  theme.global.name.value = isCyberpunk.value ? 'light' : 'cyberpunk'
 }
 </script>

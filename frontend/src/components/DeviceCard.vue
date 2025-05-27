@@ -1,19 +1,21 @@
 <template>
-  <v-card class="device-card" :class="{ 'device-offline': !device.online }">
+  <v-card class="device-card cyber-device-card" :class="{ 'device-offline': !device.online }">
     <v-card-title class="d-flex align-center">
-      <v-icon :icon="deviceIcon" class="mr-2"></v-icon>
-      {{ device.name }}
+      <v-icon :icon="deviceIcon" class="mr-2" size="24"></v-icon>
+      {{ device.name.toUpperCase() }}
       <v-spacer></v-spacer>
       <v-chip
         :color="device.online ? 'success' : 'error'"
         size="small"
         variant="flat"
+        class="cyber-status-chip"
       >
-        {{ device.online ? 'Online' : 'Offline' }}
+        <v-icon size="12" class="mr-1">{{ device.online ? 'mdi-connection' : 'mdi-close-network' }}</v-icon>
+        {{ device.online ? 'LINKED' : 'OFFLINE' }}
       </v-chip>
     </v-card-title>
 
-    <v-card-subtitle>{{ device.room }}</v-card-subtitle>
+    <v-card-subtitle class="cyber-subtitle">SECTOR: {{ device.room.toUpperCase() }}</v-card-subtitle>
 
     <v-card-text>
       <div v-if="device.type === 'light' || device.type === 'switch'">
@@ -22,7 +24,9 @@
           :disabled="!device.online"
           @update:model-value="toggleDevice"
           hide-details
-          :label="device.state.state === 'ON' ? 'On' : 'Off'"
+          :label="device.state.state === 'ON' ? 'POWERED' : 'DORMANT'"
+          color="primary"
+          class="cyber-switch"
         ></v-switch>
         
         <v-slider
@@ -33,15 +37,17 @@
           min="1"
           max="254"
           step="1"
-          label="Brightness"
-          class="mt-4"
+          label="LUMINOSITY CONTROL"
+          color="primary"
+          track-color="surface-variant"
+          class="mt-4 cyber-slider"
         ></v-slider>
       </div>
 
       <div v-else-if="device.type === 'sensor'">
-        <div v-for="(value, key) in sensorData" :key="key" class="mb-2">
-          <div class="text-caption">{{ formatSensorKey(key) }}</div>
-          <div class="text-h6">{{ formatSensorValue(key, value) }}</div>
+        <div v-for="(value, key) in sensorData" :key="key" class="mb-3 cyber-sensor-data">
+          <div class="text-caption cyber-label">{{ formatSensorKey(key) }}</div>
+          <div class="text-h6 cyber-value">{{ formatSensorValue(key, value) }}</div>
         </div>
       </div>
 
@@ -52,21 +58,24 @@
 
     <v-card-actions v-if="device.online">
       <v-btn
-        variant="text"
+        variant="outlined"
         size="small"
+        color="secondary"
         @click="showDetails = !showDetails"
+        class="cyber-btn"
       >
-        Details
+        <v-icon size="16" class="mr-1">mdi-information-outline</v-icon>
+        NEURAL DATA
       </v-btn>
     </v-card-actions>
 
     <v-expand-transition>
       <div v-show="showDetails">
         <v-divider></v-divider>
-        <v-card-text>
-          <div class="text-caption mb-2">Last seen: {{ formatDate(device.lastSeen) }}</div>
-          <div class="text-caption mb-2">Zigbee ID: {{ device.zigbeeId }}</div>
-          <div class="text-caption">Type: {{ device.type }}</div>
+        <v-card-text class="cyber-details">
+          <div class="text-caption mb-2 cyber-label">LAST SYNC: {{ formatDate(device.lastSeen) }}</div>
+          <div class="text-caption mb-2 cyber-label">NEURAL ID: {{ device.zigbeeId }}</div>
+          <div class="text-caption cyber-label">NODE TYPE: {{ device.type.toUpperCase() }}</div>
         </v-card-text>
       </div>
     </v-expand-transition>

@@ -1,0 +1,343 @@
+/* Cyberpunk/Neon Styles */
+
+/* Global neon glow effects */
+@keyframes neon-glow {
+  0%, 100% {
+    text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
+  }
+  50% {
+    text-shadow: 0 0 2px currentColor, 0 0 5px currentColor, 0 0 8px currentColor;
+  }
+}
+
+@keyframes border-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px currentColor, 0 0 10px currentColor, inset 0 0 5px rgba(0, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 10px currentColor, 0 0 20px currentColor, inset 0 0 10px rgba(0, 255, 255, 0.2);
+  }
+}
+
+/* Body background with scanlines */
+body {
+  background: #0a0a0a;
+  background-image: 
+    linear-gradient(transparent 50%, rgba(0, 255, 255, 0.03) 50%);
+  background-size: 100% 4px;
+  animation: scanlines 0.1s linear infinite;
+}
+
+@keyframes scanlines {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 4px; }
+}
+
+/* Enhanced card styles */
+.v-card {
+  background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  box-shadow: 
+    0 0 20px rgba(0, 255, 255, 0.1),
+    inset 0 0 20px rgba(0, 255, 255, 0.05) !important;
+  backdrop-filter: blur(10px);
+}
+
+.v-card:hover {
+  border-color: rgba(0, 255, 255, 0.6) !important;
+  animation: border-glow 2s ease-in-out infinite;
+}
+
+/* Neon text effects */
+.v-card-title,
+.text-h4,
+.text-h6 {
+  color: #00ffff !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+  animation: neon-glow 2s ease-in-out infinite alternate;
+}
+
+/* App bar styling */
+.v-app-bar {
+  background: linear-gradient(90deg, #111111 0%, #1a1a1a 50%, #111111 100%) !important;
+  border-bottom: 2px solid #00ffff !important;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3) !important;
+}
+
+/* Navigation drawer */
+.v-navigation-drawer {
+  background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%) !important;
+  border-right: 1px solid rgba(0, 255, 255, 0.3) !important;
+}
+
+/* Buttons */
+.v-btn {
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-weight: 600 !important;
+  border: 1px solid currentColor !important;
+  transition: all 0.3s ease !important;
+}
+
+.v-btn:hover {
+  box-shadow: 0 0 15px currentColor !important;
+  transform: translateY(-2px) !important;
+}
+
+.v-btn--variant-elevated {
+  background: linear-gradient(45deg, rgba(0, 255, 255, 0.1) 0%, rgba(0, 255, 255, 0.2) 100%) !important;
+}
+
+/* Switches and sliders with neon effect */
+.v-switch .v-selection-control__wrapper {
+  filter: drop-shadow(0 0 8px #00ffff);
+}
+
+.v-slider-thumb {
+  background: #00ffff !important;
+  box-shadow: 0 0 15px #00ffff !important;
+}
+
+.v-slider-track-fill {
+  background: linear-gradient(90deg, #00ffff 0%, #00ff41 100%) !important;
+}
+
+/* Progress indicators */
+.v-progress-linear {
+  background: rgba(0, 255, 255, 0.1) !important;
+}
+
+.v-progress-linear .v-progress-linear__determinate {
+  background: linear-gradient(90deg, #00ffff 0%, #00ff41 100%) !important;
+  box-shadow: 0 0 10px currentColor !important;
+}
+
+/* List items */
+.v-list-item {
+  border-left: 2px solid transparent !important;
+  transition: all 0.3s ease !important;
+}
+
+.v-list-item:hover {
+  border-left-color: #00ffff !important;
+  background: rgba(0, 255, 255, 0.05) !important;
+  transform: translateX(5px) !important;
+}
+
+/* Chips with neon styling */
+.v-chip {
+  background: linear-gradient(45deg, rgba(0, 255, 255, 0.2) 0%, rgba(255, 0, 255, 0.2) 100%) !important;
+  border: 1px solid currentColor !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  letter-spacing: 1px !important;
+}
+
+.v-chip--variant-flat {
+  box-shadow: 0 0 10px currentColor !important;
+}
+
+/* Text fields and selects */
+.v-field {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 4px !important;
+}
+
+.v-field--focused {
+  border-color: #00ffff !important;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3) !important;
+}
+
+/* Device card offline state */
+.device-offline {
+  opacity: 0.4 !important;
+  filter: grayscale(0.8) !important;
+}
+
+.device-offline .v-card {
+  border-color: rgba(255, 0, 102, 0.3) !important;
+}
+
+/* Icons with glow */
+.v-icon {
+  filter: drop-shadow(0 0 3px currentColor) !important;
+}
+
+/* Snackbar */
+.v-snackbar .v-snackbar__wrapper {
+  background: linear-gradient(45deg, #111111 0%, #1a1a1a 100%) !important;
+  border: 1px solid #00ffff !important;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3) !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111111;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00ffff 0%, #ff00ff 100%);
+  border-radius: 4px;
+  box-shadow: 0 0 10px currentColor;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00d4d4 0%, #d400d4 100%);
+}
+
+/* Grid container */
+.v-container {
+  background: radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.02) 0%, transparent 70%);
+}
+
+/* Enhanced hover effects for interactive elements */
+.v-card:hover .v-card-title {
+  animation: neon-glow 1s ease-in-out infinite alternate;
+}
+
+/* Status indicators */
+.status-online {
+  color: #00ff41 !important;
+  text-shadow: 0 0 10px #00ff41 !important;
+}
+
+.status-offline {
+  color: #ff0066 !important;
+  text-shadow: 0 0 10px #ff0066 !important;
+}
+
+/* Additional cyberpunk styles */
+.cyber-stat-card {
+  background: radial-gradient(circle at center, rgba(0, 255, 255, 0.1) 0%, transparent 70%) !important;
+  transition: all 0.3s ease !important;
+}
+
+.cyber-stat-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3) !important;
+}
+
+.cyber-label {
+  color: #00ffff !important;
+  font-family: 'Courier New', monospace !important;
+  font-weight: 600 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+}
+
+.cyber-value {
+  color: #00ff41 !important;
+  font-family: 'Courier New', monospace !important;
+  font-weight: 700 !important;
+  text-shadow: 0 0 15px currentColor !important;
+}
+
+.cyber-device-card {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.cyber-device-card::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: -100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent) !important;
+  transition: left 0.5s ease !important;
+}
+
+.cyber-device-card:hover::before {
+  left: 100% !important;
+}
+
+.cyber-subtitle {
+  color: #ff00ff !important;
+  font-family: 'Courier New', monospace !important;
+  font-weight: 500 !important;
+  text-shadow: 0 0 8px currentColor !important;
+}
+
+.cyber-switch .v-label {
+  color: #00ffff !important;
+  font-family: 'Courier New', monospace !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+}
+
+.cyber-slider .v-label {
+  color: #00ffff !important;
+  font-family: 'Courier New', monospace !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+}
+
+.cyber-sensor-data {
+  padding: 8px 12px !important;
+  background: rgba(0, 255, 255, 0.05) !important;
+  border-left: 3px solid #00ffff !important;
+  border-radius: 4px !important;
+}
+
+.cyber-btn {
+  text-transform: uppercase !important;
+  font-family: 'Courier New', monospace !important;
+  font-weight: 600 !important;
+  letter-spacing: 1px !important;
+}
+
+.cyber-details {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border-top: 1px solid rgba(0, 255, 255, 0.2) !important;
+}
+
+.cyber-room-card {
+  background: linear-gradient(135deg, rgba(255, 0, 255, 0.1) 0%, rgba(0, 255, 255, 0.1) 100%) !important;
+}
+
+.cyber-progress .v-progress-linear__determinate {
+  background: linear-gradient(90deg, #00ffff 0%, #ff00ff 50%, #00ff41 100%) !important;
+  animation: progress-glow 2s ease-in-out infinite alternate !important;
+}
+
+@keyframes progress-glow {
+  0% { filter: brightness(1) drop-shadow(0 0 5px currentColor); }
+  100% { filter: brightness(1.2) drop-shadow(0 0 15px currentColor); }
+}
+
+.cyber-status-chip {
+  background: linear-gradient(45deg, rgba(0, 255, 255, 0.2) 0%, rgba(0, 255, 65, 0.2) 100%) !important;
+  border: 1px solid currentColor !important;
+  font-family: 'Courier New', monospace !important;
+  font-weight: 700 !important;
+}
+
+/* App bar enhancements */
+.cyberpunk-title {
+  font-family: 'Courier New', monospace !important;
+  font-weight: 900 !important;
+  letter-spacing: 3px !important;
+  background: linear-gradient(45deg, #00ffff, #ff00ff, #00ff41) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: title-glow 3s ease-in-out infinite alternate !important;
+}
+
+@keyframes title-glow {
+  0% { 
+    filter: drop-shadow(0 0 10px #00ffff);
+    transform: scale(1);
+  }
+  100% { 
+    filter: drop-shadow(0 0 20px #ff00ff);
+    transform: scale(1.02);
+  }
+}
