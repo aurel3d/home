@@ -1,0 +1,21 @@
+{
+  "name": "home-automation",
+  "version": "1.0.0",
+  "description": "Custom home automation system with Zigbee2MQTT",
+  "scripts": {
+    "dev": "concurrently \"pnpm run dev:backend\" \"pnpm run dev:frontend\"",
+    "dev:backend": "cd backend && pnpm run dev",
+    "dev:frontend": "cd frontend && pnpm run dev",
+    "build": "pnpm run build:frontend && pnpm run build:backend",
+    "build:backend": "cd backend && pnpm run build",
+    "build:frontend": "cd frontend && pnpm run build",
+    "install:all": "pnpm install && cd backend && pnpm install && cd ../frontend && pnpm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "tsx": "^4.19.4"
+  }
+}
