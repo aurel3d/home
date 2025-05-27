@@ -42,6 +42,7 @@ const navigationItems = [
   { title: 'NEURAL CORE', icon: 'mdi-brain', to: '/' },
   { title: 'TECH MATRIX', icon: 'mdi-wifi', to: '/devices' },
   { title: 'SECTORS', icon: 'mdi-lan', to: '/rooms' },
+  { title: 'NEURAL GROUPS', icon: 'mdi-group', to: '/groups' },
   { title: 'SYS CONFIG', icon: 'mdi-cog-outline', to: '/settings' },
 ]
 

@@ -18,6 +18,9 @@ model Device {
   zigbeeId  String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  
+  // Many-to-many relationship through junction table
+  groups    DeviceGroupMember[]
 
   @@map("devices")
 }
@@ -29,6 +32,32 @@ model Room {
   updatedAt DateTime @updatedAt
 
   @@map("rooms")
+}
+
+model DeviceGroup {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  color       String   @default("#00ffff")
+  icon        String   @default("mdi-group")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Many-to-many relationship through junction table
+  devices     DeviceGroupMember[]
+
+  @@map("device_groups")
+}
+
+model DeviceGroupMember {
+  deviceId String
+  groupId  String
+  
+  device   Device      @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  group    DeviceGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  
+  @@id([deviceId, groupId])
+  @@map("device_group_members")
 }
 
 model DeviceLog {

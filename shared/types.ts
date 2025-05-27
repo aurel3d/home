@@ -7,6 +7,7 @@ export interface Device {
   state: Record<string, any>;
   lastSeen: Date;
   zigbeeId: string;
+  groups?: DeviceGroup[];
 }
 
 export enum DeviceType {
@@ -34,6 +35,22 @@ export interface MqttMessage {
   topic: string;
   payload: any;
   timestamp: Date;
+}
+
+export interface DeviceGroup {
+  id: string;
+  name: string;
+  description?: string;
+  color: string;
+  icon: string;
+  devices: string[]; // Device IDs
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface GroupCommand {
+  groupId: string;
+  command: Record<string, any>;
 }
 
 export interface ApiResponse<T = any> {

@@ -20,6 +20,11 @@ const router = createRouter({
       component: () => import('@/views/Rooms.vue')
     },
     {
+      path: '/groups',
+      name: 'Groups',
+      component: () => import('@/views/Groups.vue')
+    },
+    {
       path: '/settings',
       name: 'Settings',
       component: () => import('@/views/Settings.vue')
