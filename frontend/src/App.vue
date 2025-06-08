@@ -18,6 +18,18 @@
       </template>
     </v-snackbar>
 
+    <v-snackbar v-model="showError" timeout="5000" color="error" top>
+      {{ error }}
+      <template #actions>
+        <v-btn text @click="showError = false">Close</v-btn>
+      </template>
+    </v-snackbar>
+      {{ transcript }}
+      <template #actions>
+        <v-btn text @click="showTranscript = false">Close</v-btn>
+      </template>
+    </v-snackbar>
+
     <v-navigation-drawer v-model="drawer" temporary>
       <v-list>
         <v-list-item

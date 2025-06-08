@@ -7,7 +7,7 @@ import { MqttService } from './services/mqtt';
 import { DeviceService } from './services/device';
 import { apiRouter } from './routes/api';
 import multer from 'multer';
-import wav from 'wav';
+import { spawn } from 'child_process';
 import { newRecognizer } from './services/speech';
 
 dotenv.config();
@@ -33,23 +33,38 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Voice command endpoint: upload WAV audio, transcribe via Vosk
+// Voice command endpoint: upload audio (supports various formats), transcribe via Vosk
 const upload = multer({ storage: multer.memoryStorage() });
 app.post('/api/speech', upload.single('audio'), (req, res) => {
   if (!req.file || !req.file.buffer) {
     return res.status(400).json({ error: 'No audio file provided' });
   }
-  const reader = new wav.Reader();
-  reader.on('format', (format) => {
-    const recognizer = newRecognizer(format.sampleRate);
-    reader.on('data', (data) => recognizer.acceptWaveform(data));
-    reader.on('end', () => {
-      const result = recognizer.finalResult();
-      res.json({ text: result.text });
-    });
+  const sampleRate = parseInt(process.env.VOSK_SAMPLE_RATE || '16000', 10);
+  const recognizer = newRecognizer(sampleRate);
+
+  // Convert audio to raw PCM s16le using ffmpeg
+  const ffmpeg = spawn('ffmpeg', [
+    '-loglevel', 'error',
+    '-i', 'pipe:0',
+    '-ar', sampleRate.toString(),
+    '-ac', '1',
+    '-f', 's16le',
+    'pipe:1',
+  ]);
+  ffmpeg.on('error', err => {
+    console.error(`ffmpeg spawn error: ${err}`);
+    res.status(500).json({ error: 'Audio processing error' });
   });
-  reader.on('error', (err) => res.status(500).json({ error: err.message }));
-  reader.end(req.file.buffer);
+  ffmpeg.stderr.on('data', data => console.error(`ffmpeg stderr: ${data}`));
+
+  ffmpeg.stdout.on('data', chunk => recognizer.acceptWaveform(chunk));
+  ffmpeg.stdout.on('end', () => {
+    const result = recognizer.finalResult();
+    res.json({ text: result.text });
+  });
+
+  // Pipe uploaded audio to ffmpeg
+  ffmpeg.stdin.end(req.file.buffer);
 });
 
 const deviceService = new DeviceService();

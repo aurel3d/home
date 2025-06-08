@@ -17,11 +17,25 @@ export function useVoice() {
       error.value = 'Audio capture not supported in this browser';
       return;
     }
+    // Check MediaRecorder support
+    if (typeof MediaRecorder === 'undefined') {
+      error.value = 'MediaRecorder API not supported in this browser.';
+      return;
+    }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       let recorder: MediaRecorder;
+      // Determine supported MIME type for recording
+      const mimeTypes = ['audio/webm;codecs=opus', 'audio/ogg;codecs=opus', 'audio/webm'];
+      const options: MediaRecorderOptions = {};
+      for (const type of mimeTypes) {
+        if (MediaRecorder.isTypeSupported(type)) {
+          options.mimeType = type;
+          break;
+        }
+      }
       try {
-        recorder = new MediaRecorder(stream);
+        recorder = new MediaRecorder(stream, options);
       } catch (e: any) {
         // Handle MediaRecorder init errors
         if (e.name === 'NotFoundError') {
