@@ -6,6 +6,9 @@ import dotenv from 'dotenv';
 import { MqttService } from './services/mqtt';
 import { DeviceService } from './services/device';
 import { apiRouter } from './routes/api';
+import multer from 'multer';
+import wav from 'wav';
+import { newRecognizer } from './services/speech';
 
 dotenv.config();
 
@@ -29,6 +32,25 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
+
+// Voice command endpoint: upload WAV audio, transcribe via Vosk
+const upload = multer({ storage: multer.memoryStorage() });
+app.post('/api/speech', upload.single('audio'), (req, res) => {
+  if (!req.file || !req.file.buffer) {
+    return res.status(400).json({ error: 'No audio file provided' });
+  }
+  const reader = new wav.Reader();
+  reader.on('format', (format) => {
+    const recognizer = newRecognizer(format.sampleRate);
+    reader.on('data', (data) => recognizer.acceptWaveform(data));
+    reader.on('end', () => {
+      const result = recognizer.finalResult();
+      res.json({ text: result.text });
+    });
+  });
+  reader.on('error', (err) => res.status(500).json({ error: err.message }));
+  reader.end(req.file.buffer);
+});
 
 const deviceService = new DeviceService();
 const mqttService = new MqttService(deviceService, io);
